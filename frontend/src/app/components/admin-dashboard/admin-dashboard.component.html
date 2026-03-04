@@ -1,0 +1,47 @@
+<div class="card">
+  <h2>Admin Dashboard</h2>
+  <div *ngIf="stats">
+    <span class="metric">Revenue: ₹{{ stats.revenue }}</span>
+    <span class="metric">Orders: {{ stats.orderCount }}</span>
+    <span class="metric">Low Stock: {{ stats.lowStockCount }}</span>
+  </div>
+
+  <div class="grid-2" style="margin-top:1rem;">
+    <div>
+      <h3>Inventory</h3>
+      <input [(ngModel)]="form.name" placeholder="Name">
+      <input [(ngModel)]="form.category" placeholder="Category">
+      <input [(ngModel)]="form.price" type="number" placeholder="Price">
+      <input [(ngModel)]="form.stock" type="number" placeholder="Stock">
+      <button (click)="saveItem()">{{ form.id ? 'Update' : 'Add' }} Item</button>
+
+      <table>
+        <thead><tr><th>Name</th><th>Stock</th><th>Price</th><th></th></tr></thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{ item.name }}</td><td>{{ item.stock }}</td><td>₹{{ item.price }}</td>
+            <td>
+              <button (click)="edit(item)">Edit</button>
+              <button (click)="remove(item.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3>Orders</h3>
+      <table>
+        <thead><tr><th>ID</th><th>Date</th><th>Total</th><th>Payment</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.createdAt | date:'short' }}</td>
+            <td>₹{{ order.total }}</td>
+            <td>{{ order.paymentMethod }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

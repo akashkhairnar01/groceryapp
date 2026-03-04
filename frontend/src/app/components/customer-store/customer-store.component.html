@@ -1,0 +1,41 @@
+<div class="card">
+  <h2>Customer Store</h2>
+  <div class="grid-2">
+    <div>
+      <h3>Items</h3>
+      <table>
+        <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>{{ item.stock }}</td>
+            <td><button (click)="addToCart(item)">Add</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3>Cart</h3>
+      <table>
+        <thead><tr><th>Item</th><th>Qty</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let c of cart">
+            <td>{{ c.name }}</td><td>{{ c.qty }}</td><td>₹{{ c.price * c.qty }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><b>Total: ₹{{ total() }}</b></p>
+      <label>Payment:
+        <select [(ngModel)]="paymentMethod">
+          <option value="COD">COD</option>
+          <option value="ONLINE">ONLINE</option>
+        </select>
+      </label>
+      <br><br>
+      <button (click)="placeOrder()">Checkout</button>
+    </div>
+  </div>
+</div>
