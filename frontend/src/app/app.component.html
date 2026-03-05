@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="hero" @fadeSlide>
+    <h1>🛒 Local Grocery</h1>
+    <p class="subtitle">Smart local store management with fast billing and admin analytics.</p>
+  </div>
+
+  <div class="login-wrap" *ngIf="!isLoggedIn" @fadeSlide>
+    <div class="card auth-card">
+      <h2>Login</h2>
+      <p class="hint">Use <b>customer/customer123</b> or <b>admin/admin123</b>.</p>
+      <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
+        <div class="field">
+          <label>Role</label>
+          <select name="role" [(ngModel)]="credentials.role" required>
+            <option value="customer">Customer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Username</label>
+          <input name="username" [(ngModel)]="credentials.username" required minlength="3" />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input name="password" [(ngModel)]="credentials.password" type="password" required minlength="6" />
+        </div>
+
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="isLoggedIn" @fadeSlide>
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="btn" [class.btn-primary]="activeTab==='customer'" (click)="activeTab='customer'">Customer</button>
+        <button class="btn" [class.btn-primary]="activeTab==='admin'" (click)="activeTab='admin'">Admin</button>
+      </div>
+      <button class="btn btn-danger" (click)="logout()">Logout</button>
+    </div>
+
+    <div style="margin-top: 1rem;" *ngIf="activeTab === 'customer'">
+      <app-customer-store></app-customer-store>
+    </div>
+
+    <div style="margin-top: 1rem;" *ngIf="activeTab === 'admin'">
+      <app-admin-dashboard></app-admin-dashboard>
+    </div>
+  </div>
+</div>

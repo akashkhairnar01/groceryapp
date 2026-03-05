@@ -1,0 +1,55 @@
+<div class="card glass-card">
+  <h2>Customer Store</h2>
+  <p class="hint">Select products, manage cart quantity, and checkout via COD/Online.</p>
+
+  <div class="grid-2 responsive-grid">
+    <div>
+      <h3>Available Items</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Qty</th><th></th></tr></thead>
+          <tbody [@listAnimation]="items.length">
+            <tr *ngFor="let item of items">
+              <td>{{ item.name }}</td>
+              <td>{{ item.category }}</td>
+              <td>₹{{ item.price }}</td>
+              <td>{{ item.stock }}</td>
+              <td>
+                <input type="number" min="1" [max]="item.stock" [(ngModel)]="qtyByItem[item.id!]" class="input-mini" />
+              </td>
+              <td><button class="btn btn-primary" (click)="addToCart(item)">Add</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <h3>Your Cart</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Item</th><th>Qty</th><th>Amount</th><th></th></tr></thead>
+          <tbody [@listAnimation]="cart.length">
+            <tr *ngFor="let c of cart">
+              <td>{{ c.name }}</td>
+              <td>{{ c.qty }}</td>
+              <td>₹{{ c.price * c.qty }}</td>
+              <td><button class="btn" (click)="decrease(c.itemId)">-1</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="checkout-panel">
+        <p><b>Total: ₹{{ total() }}</b></p>
+        <label>Payment Method</label>
+        <select [(ngModel)]="paymentMethod">
+          <option value="COD">Cash on Delivery</option>
+          <option value="ONLINE">Online Payment</option>
+        </select>
+        <button class="btn btn-primary" (click)="placeOrder()">Checkout</button>
+        <p class="hint" *ngIf="message">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+</div>
